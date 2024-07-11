@@ -1,0 +1,10 @@
+target/
+.idea
+logs
+.mvn
+HELP.md
+mvnw
+mvnw.cmd
+src/main/resources/static
+src/main/resources/templates
+*.iml

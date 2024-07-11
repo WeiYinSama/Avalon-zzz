@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.avalon.zzz.mapper.generator.VideoMapper">
+
+<!--       * select id from video where stage_id = #{stageId} and id in (
+     *      select video_id from team where boss_id = #{bossId} and id in (
+     *            select team_id from team_agent where agent_id in (#{agents}) group by team_id having count(distinct agent_id) = #{agents.size}
+     *       )
+     * ) order by id desc limit 0,#{pageSize}  -->
+
+
+    <select id="findVideoIdsByQueryParams" resultType="java.lang.Long">
+        select id
+        from video
+        <where>
+            status = #{status}
+            <if test="stageId != null">
+                and stage_id = #{stageId}
+            </if>
+            <if test="(agents != null and agents.size() > 0) or bossId != null">
+                and id in (
+                    select video_id from team
+                    <where>
+                        <if test="bossId != null">
+                            boss_id = #{bossId}
+                        </if>
+                        <if test="agents != null and agents.size() > 0">
+                            and id in (
+                                select team_id
+                                from team_agent
+                                where agent_id in
+                                <foreach collection="agents" item="aid" open="(" separator="," close=")">
+                                    #{aid}
+                                </foreach>
+                                group by team_id
+                                having count(distinct agent_id) = #{agentsSize}
+                            )
+                        </if>
+                    </where>
+                )
+            </if>
+        </where>
+        order by id desc
+        limit #{pageSize}
+        offset #{offset}
+    </select>
+</mapper>
