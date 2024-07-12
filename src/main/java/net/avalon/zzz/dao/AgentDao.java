@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
+import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +93,7 @@ public class AgentDao {
             example.createCriteria().andDeletedEqualTo((byte) 0);
             List<AgentPo> pos = mapper.selectByExample(example);
             ret = pos.stream().map(Agent::new).toList();
-        } catch (AvalonException e) {
+        } catch (DataAccessException e) {
             throw new AvalonException(AvalonStatus.INTERNAL_SERVER_ERR, "数据库访问错误");
         }
         return ret;
@@ -108,7 +110,7 @@ public class AgentDao {
         return aids.stream().map(this::findById).toList();
     }
 
-    public Agent findById(Long id){
+    public Agent findById(Long id) {
         AgentPo po = mapper.selectByPrimaryKey(id);
 
         return new Agent(po);
