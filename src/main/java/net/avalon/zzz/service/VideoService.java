@@ -26,10 +26,7 @@ public class VideoService {
     private TeamDao teamDao;
 
     @Autowired
-    private StageDao stageDao;
-
-    @Autowired
-    private BossDao bossDao;
+    private LevelDao levelDao;
 
     @Autowired
     private AgentDao agentDao;
@@ -73,15 +70,12 @@ public class VideoService {
         // video
         Video video = dao.findById(vid);
         // stage
-        Long stageId = video.getStageId();
-        Stage stage = stageDao.findById(stageId);
-        video.setStage(stage);
+        Long levelId = video.getLevelId();
+        Level level = levelDao.getById(levelId);
+        video.setLevel(level);
         // team
         List<Team> teams = teamDao.findByVid(vid);
         teams.forEach(team -> {
-            // boss
-            Boss boss = bossDao.findById(team.getBossId());
-            team.setBoss(boss);
             // agent
             List<Agent> agents = agentDao.findByTeamId(team.getId());
             team.setAgents(agents);

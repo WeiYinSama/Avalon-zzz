@@ -9,7 +9,6 @@ import net.avalon.zzz.dao.bo.Team;
 import net.avalon.zzz.dao.bo.Video;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class VideoForm {
     //关卡名称
     @NotBlank(message = "关卡名称不能为空")
     @Length(max = 32,message = "关卡名称长度不能超过32个字")
-    private String stageName;
+    private String levelName;
     @NotBlank(message = "视频不能为空")
     @Length(max = 128,message = "视频地址长度不能超过128个字")
     private String address;
@@ -33,7 +32,7 @@ public class VideoForm {
     @Length(max = 16,message = "署名不能超过16个字")
     private String actionBy;
     @NotNull(message = "关卡类型不能为空")
-    private Long stageId;
+    private Long levelId;
     @NotEmpty(message = "至少需要一个队伍")
     private List<TeamForm> teams;
 
@@ -42,10 +41,10 @@ public class VideoForm {
     public Video toBo() {
         Video bo = new Video();
         bo.setTitle(this.title);
-        bo.setStageName(this.stageName);
+        bo.setLevelName(this.levelName);
         bo.setAddress(this.address);
         bo.setActionBy(this.actionBy);
-        bo.setStageId(this.stageId);
+        bo.setLevelId(this.levelId);
         bo.setTeams(teams.stream().map(TeamForm::toBo).toList());
         return bo;
     }
@@ -53,12 +52,10 @@ public class VideoForm {
 
     @Data
     static class TeamForm {
-        private Long bossId;
         private List<Long> agents;
 
         public Team toBo(){
             Team bo = new Team();
-            bo.setBossId(this.bossId);
             bo.setAgents(this.agents.stream().map(Agent::new).toList());
             return bo;
         }

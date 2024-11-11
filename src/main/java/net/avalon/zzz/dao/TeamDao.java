@@ -2,19 +2,26 @@ package net.avalon.zzz.dao;
 
 import net.avalon.generic.core.exception.AvalonException;
 import net.avalon.generic.core.exception.AvalonStatus;
+import net.avalon.zzz.core.enums.DeletedEnum;
 import net.avalon.zzz.dao.bo.Agent;
 import net.avalon.zzz.dao.bo.Team;
 import net.avalon.zzz.mapper.generator.TeamAgentPoMapper;
 import net.avalon.zzz.mapper.generator.TeamPoMapper;
 import net.avalon.zzz.mapper.generator.po.TeamAgentPo;
 import net.avalon.zzz.mapper.generator.po.TeamPo;
-import net.avalon.zzz.mapper.generator.po.TeamPoExample;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static net.avalon.zzz.mapper.generator.TeamAgentPoDynamicSqlSupport.teamAgentPo;
+import static net.avalon.zzz.mapper.generator.TeamPoDynamicSqlSupport.teamPo;
+import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.select;
 
 /**
  * @Author: Weiyin
@@ -31,7 +38,7 @@ public class TeamDao {
 
     public void addTeam(Team team) {
         TeamPo po = team.toPo();
-        po.setDeleted((byte) 0);
+        po.setDeleted(DeletedEnum.NOMAL.getCode());
         po.setCreateTime(LocalDateTime.now());
         try {
             int i = mapper.insertSelective(po);
@@ -40,7 +47,7 @@ public class TeamDao {
             }
             List<Agent> agents = team.getAgents();
             agents.forEach(agent -> {
-                addTeamAgent(po.getId(), agent.getId());
+                this.addTeamAgent(po.getId(), agent.getId());
             });
         } catch (DataAccessException e) {
             throw new AvalonException(AvalonStatus.INTERNAL_SERVER_ERR, "数据库访问错误");
@@ -52,17 +59,18 @@ public class TeamDao {
         TeamAgentPo teamAgentPo = new TeamAgentPo();
         teamAgentPo.setTeamId(tid);
         teamAgentPo.setAgentId(aid);
-        teamAgentPo.setDeleted((byte) 0);
+        teamAgentPo.setDeleted(DeletedEnum.NOMAL.getCode());
         teamAgentPo.setCreateTime(LocalDateTime.now());
         teamAgentPoMapper.insertSelective(teamAgentPo);
     }
 
     public List<Team> findByVid(Long vid) {
 
-        TeamPoExample example = new TeamPoExample();
-        example.or().andVideoIdEqualTo(vid);
-        List<TeamPo> pos = mapper.selectByExample(example);
+        SelectStatementProvider provider = select(teamPo.allColumns()).from(teamPo)
+                .where(teamPo.videoId, isEqualTo(vid))
+                .and(teamPo.deleted, isEqualTo(DeletedEnum.NOMAL.getCode()))
+                .build().render(RenderingStrategies.MYBATIS3);
 
-        return pos.stream().map(Team::new).toList();
+        return mapper.selectMany(provider).stream().map(Team::new).toList();
     }
 }

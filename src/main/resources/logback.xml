@@ -55,7 +55,7 @@
     <logger name="net.avalon.zzz.service" level="DEBUG"/>
     <logger name="net.avalon.zzz.dao" level="DEBUG"/>
     <!-- mapper层 日志级别：DEBUG: 展示SQL，默认INFO -->
-    <logger name="net.avalon.zzz.mapper" level="INFO"/>
+    <logger name="net.avalon.zzz.mapper" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

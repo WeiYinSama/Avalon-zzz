@@ -11,12 +11,12 @@ import net.avalon.zzz.dao.bo.Agent;
 public class AgentForm {
 
     private String name;
-    private String image;
+    private String avatar;
 
     public Agent toBo(){
         Agent bo = new Agent();
         bo.setName(this.name);
-        bo.setImage(this.image);
+        bo.setAvatar(this.avatar);
         return bo;
     }
 }

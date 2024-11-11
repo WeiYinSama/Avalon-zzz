@@ -74,17 +74,23 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
         </dependency>
-        <!-- Mysql 连接池 - druid -->
+        <!-- Mysql 连接池 - druid datasource -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.13</version>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <version>1.2.23</version>
         </dependency>
         <!-- mybatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <!-- mybatis-dynamic-sql -->
+        <dependency>
+            <groupId>org.mybatis.dynamic-sql</groupId>
+            <artifactId>mybatis-dynamic-sql</artifactId>
+            <version>1.5.2</version>
         </dependency>
         <!-- pagehelper -->
         <dependency>

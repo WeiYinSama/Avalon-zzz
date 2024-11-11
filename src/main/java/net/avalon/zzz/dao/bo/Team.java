@@ -15,26 +15,31 @@ import java.util.List;
 @NoArgsConstructor
 public class Team {
     private Long id;
-    private Long bossId;
+    private String name;
     private Long videoId;
     private Byte deleted;
     private LocalDateTime createTime;
+    private Long createBy;
     private LocalDateTime updateTime;
+    private Long updateBy;
+
     private List<Agent> agents;
-    private Boss boss;
+
 
     public Team(TeamPo po){
         this.id = po.getId();
-        this.bossId = po.getBossId();
+        this.name = po.getName();
         this.videoId = po.getVideoId();
         this.deleted = po.getDeleted();
         this.createTime = po.getCreateTime();
+        this.createBy = po.getCreateBy();
         this.updateTime = po.getUpdateTime();
+        this.updateBy = po.getUpdateBy();
     }
 
     public TeamPo toPo(){
         TeamPo po = new TeamPo();
-        po.setBossId(this.bossId);
+        po.setName(this.name);
         po.setVideoId(this.videoId);
         return po;
     }

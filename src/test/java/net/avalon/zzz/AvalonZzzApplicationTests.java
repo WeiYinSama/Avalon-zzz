@@ -7,7 +7,6 @@ import net.avalon.zzz.dao.bo.Agent;
 import net.avalon.zzz.dao.bo.Team;
 import net.avalon.zzz.dao.bo.Video;
 import net.avalon.zzz.mapper.generator.AgentPoMapper;
-import net.avalon.zzz.mapper.generator.VideoMapper;
 import net.avalon.zzz.mapper.generator.po.AgentPo;
 import net.avalon.zzz.service.VideoService;
 import org.junit.jupiter.api.Test;
@@ -34,35 +33,17 @@ class AvalonZzzApplicationTests {
     @Autowired
     private VideoService videoService;
 
-    @Autowired
-    private VideoMapper videoMapper;
 
 
-    @Test
-    void name() {
-        QueryParams queryParams = new QueryParams();
-        queryParams.setPage(1);
-        queryParams.setPageSize(10);
 
-        queryParams.setStageId(1L);
 
-        queryParams.setBossId(2L);
-        queryParams.setAgents(List.of());
-
-        queryParams.initOffset();
-        if(queryParams.getAgents() != null){
-            queryParams.initAgentsSize();
-        }
-        List<Long> ret = videoMapper.findVideoIdsByQueryParams(queryParams);
-        log.info("ret:{}",ret);
-    }
 
     @Test
     void contextLoads() {
 
         AgentPo po = new AgentPo();
         po.setName("18号");
-        po.setImage("18号.jpg");
+        po.setAvatar("18号.jpg");
         po.setDeleted((byte) 0);
         po.setCreateTime(LocalDateTime.now());
 
@@ -74,7 +55,7 @@ class AvalonZzzApplicationTests {
 
     @Test
     void findAll() {
-        List<Agent> all = agentDao.findAll();
+        List<Agent> all = agentDao.queryAll();
         all.forEach(System.out::println);
     }
 
@@ -82,13 +63,12 @@ class AvalonZzzApplicationTests {
     void addVideo() {
         Video video = new Video();
         video.setTitle("怒肝n天！直播打了个第十层满星！！！绝区零平民深渊挑战");
-        video.setStageName("稳定节点第十防线");
-        video.setStageId(2L);
+        video.setLevelName("稳定节点第十防线");
+        video.setLevelId(2L);
         video.setAddress("https://www.bilibili.com/video/BV1gZ421E77p");
         video.setActionBy("xiao魔伊大人");
         List<Team> teams = new ArrayList<>();
         Team t1 = new Team();
-        t1.setBossId(17L);
         t1.setAgents(Stream.of(8L,17L,20L).map(e -> {
             Agent agent = new Agent();
             agent.setId(e);
@@ -96,7 +76,6 @@ class AvalonZzzApplicationTests {
         }).toList());
         teams.add(t1);
         Team t2 = new Team();
-        t2.setBossId(3L);
         t2.setAgents(Stream.of(7L,12L,13L).map(e -> {
             Agent agent = new Agent();
             agent.setId(e);

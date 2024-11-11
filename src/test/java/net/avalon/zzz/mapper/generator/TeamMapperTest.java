@@ -18,13 +18,5 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 class TeamMapperTest {
 
-    @Autowired
-    private TeamMapper teamMapper;
 
-    @Test
-    void selectTeamIdsByAgentIds() {
-        List<Long> aids = Stream.of(1L, 2L).toList();
-        List<Long> tids = teamMapper.selectTeamIdsByAgentIds(aids,aids.size());
-        tids.forEach(System.out::println);
-    }
 }

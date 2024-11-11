@@ -1,39 +1,50 @@
 package net.avalon.zzz.dao.bo;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.avalon.zzz.mapper.generator.po.AgentPo;
-import net.avalon.zzz.mapper.generator.po.BossPo;
+import net.avalon.zzz.mapper.generator.po.LevelPo;
+import net.avalon.zzz.mapper.generator.po.VideoPo;
 
 import java.time.LocalDateTime;
 
 /**
- * @Author: Weiyin
- * @Create: 2024/5/24 - 18:00
+ * @Author: Heda
+ * @Create: 2024/11/6
  */
 @Data
-@NoArgsConstructor
-public class Boss {
+public class Level {
+
     private Long id;
+
+    /**
+     * Database Column Remarks:
+     *   关卡类型
+     */
     private String name;
-    private String image;
+
     private Byte deleted;
+
     private LocalDateTime createTime;
+
+    private Long createBy;
+
     private LocalDateTime updateTime;
 
-    public Boss(BossPo po){
+    private Long updateBy;
+
+
+    public Level(LevelPo po){
         this.id = po.getId();
         this.name = po.getName();
-        this.image = po.getImage();
         this.deleted = po.getDeleted();
         this.createTime = po.getCreateTime();
+        this.createBy = po.getCreateBy();
         this.updateTime = po.getUpdateTime();
+        this.updateBy = po.getUpdateBy();
     }
 
-    public BossPo toPo(){
-        BossPo po = new BossPo();
+    public LevelPo toPo(){
+        LevelPo po = new LevelPo();
         po.setName(this.name);
-        po.setImage(this.image);
         return po;
     }
 }

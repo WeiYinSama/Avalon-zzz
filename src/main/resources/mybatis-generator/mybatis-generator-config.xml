@@ -16,7 +16,7 @@
             3，MyBatis3DynamicSQL：需要 MyBatis Dynamic SQL Version 	1.3.1+
     -->
 
-    <context id="Avalon-ZZZ" targetRuntime="MyBatis3">
+    <context id="Avalon-ZZZ" targetRuntime="MyBatis3DynamicSql">
 
         <!-- 生成的Java文件的编码 -->
         <property name="javaFileEncoding" value="UTF-8"/>
@@ -60,14 +60,6 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <!--
-            XML
-            如果 javaClientGenerator 配置中配置了需要生成XML的话，这个元素就必须配置，否则会被忽略
-        -->
-        <sqlMapGenerator targetPackage="net.avalon.zzz.mapper.generator"
-                         targetProject="src/main/resources">
-        </sqlMapGenerator>
-
         <!-- 接口
             对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口
             type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下）：
@@ -76,8 +68,7 @@
                 3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
             注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
         -->
-        <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="net.avalon.zzz.mapper.generator"
+        <javaClientGenerator targetPackage="net.avalon.zzz.mapper.generator"
                              targetProject="src/main/java">
         </javaClientGenerator>
 
@@ -119,39 +110,7 @@
 
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
         -->
-<!--        <table tableName="video" domainObjectName="VideoPo">-->
-<!--            &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--            &lt;!&ndash; The column has a generated key, it is an identity column, and the database type is Mysql.-->
-<!--            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement-->
-<!--            so that the newly generated key can be returned. &ndash;&gt;-->
-<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-<!--        </table>-->
-<!--        <table tableName="team" domainObjectName="TeamPo">-->
-<!--            &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--            &lt;!&ndash; The column has a generated key, it is an identity column, and the database type is Mysql.-->
-<!--            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement-->
-<!--            so that the newly generated key can be returned. &ndash;&gt;-->
-<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-<!--        </table>-->
-<!--        <table tableName="stage" domainObjectName="StagePo">-->
-<!--            &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--            &lt;!&ndash; The column has a generated key, it is an identity column, and the database type is Mysql.-->
-<!--            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement-->
-<!--            so that the newly generated key can be returned. &ndash;&gt;-->
-<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-<!--        </table>-->
-<!--        <table tableName="agent" domainObjectName="AgentPo">-->
-<!--            &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--            &lt;!&ndash; The column has a generated key, it is an identity column, and the database type is Mysql.-->
-<!--            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement-->
-<!--            so that the newly generated key can be returned. &ndash;&gt;-->
-<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-<!--        </table>-->
-        <table tableName="boss" domainObjectName="BossPo">
+        <table tableName="video" domainObjectName="VideoPo">
             <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
             <property name="useActualColumnNames" value="false"/>
             <!-- The column has a generated key, it is an identity column, and the database type is Mysql.
@@ -159,13 +118,37 @@
             so that the newly generated key can be returned. -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
-<!--        <table tableName="team_agent" domainObjectName="TeamAgentPo">-->
-<!--            &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--            &lt;!&ndash; The column has a generated key, it is an identity column, and the database type is Mysql.-->
-<!--            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement-->
-<!--            so that the newly generated key can be returned. &ndash;&gt;-->
-<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-<!--        </table>-->
+        <table tableName="team" domainObjectName="TeamPo">
+            <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+            <!-- The column has a generated key, it is an identity column, and the database type is Mysql.
+            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement
+            so that the newly generated key can be returned. -->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="agent" domainObjectName="AgentPo">
+            <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+            <!-- The column has a generated key, it is an identity column, and the database type is Mysql.
+            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement
+            so that the newly generated key can be returned. -->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="level" domainObjectName="LevelPo">
+            <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+            <!-- The column has a generated key, it is an identity column, and the database type is Mysql.
+            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement
+            so that the newly generated key can be returned. -->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="team_agent" domainObjectName="TeamAgentPo">
+            <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+            <!-- The column has a generated key, it is an identity column, and the database type is Mysql.
+            This will cause MBG to generate the proper <selectKey> element in the generated <insert> statement
+            so that the newly generated key can be returned. -->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

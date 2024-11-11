@@ -29,6 +29,6 @@ public class AgentService {
 
     public List<Agent> findAll() {
 
-        return dao.findAll();
+        return dao.queryAll();
     }
 }

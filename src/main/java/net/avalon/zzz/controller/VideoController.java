@@ -47,7 +47,8 @@ public class VideoController {
      */
     @PostMapping("/query")
     public R query(@RequestBody @Valid QueryParams params){
-        List<Video> ret = service.query(params);
+
+        List<Video> ret = service.query(params.initOffset());
         return ResponseUtil.ok(ret);
     }
 

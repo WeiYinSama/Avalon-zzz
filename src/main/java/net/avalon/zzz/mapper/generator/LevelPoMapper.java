@@ -1,11 +1,11 @@
 package net.avalon.zzz.mapper.generator;
 
-import static net.avalon.zzz.mapper.generator.VideoPoDynamicSqlSupport.*;
+import static net.avalon.zzz.mapper.generator.LevelPoDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 import java.util.List;
 import java.util.Optional;
-import net.avalon.zzz.mapper.generator.po.VideoPo;
+import net.avalon.zzz.mapper.generator.po.LevelPo;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
@@ -30,40 +30,35 @@ import org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, CommonUpdateMapper {
-    BasicColumn[] selectList = BasicColumn.columnList(id, title, levelName, address, status, actionBy, levelId, deleted, createTime, createBy, updateTime, updateBy);
+public interface LevelPoMapper extends CommonCountMapper, CommonDeleteMapper, CommonUpdateMapper {
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, deleted, createTime, createBy, updateTime, updateBy);
 
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="row.id", before=false, resultType=Long.class)
-    int insert(InsertStatementProvider<VideoPo> insertStatement);
+    int insert(InsertStatementProvider<LevelPo> insertStatement);
 
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="VideoPoResult", value = {
+    @Results(id="LevelPoResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
-        @Result(column="level_name", property="levelName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
-        @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
-        @Result(column="action_by", property="actionBy", jdbcType=JdbcType.VARCHAR),
-        @Result(column="level_id", property="levelId", jdbcType=JdbcType.BIGINT),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="deleted", property="deleted", jdbcType=JdbcType.TINYINT),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.BIGINT),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.BIGINT)
     })
-    List<VideoPo> selectMany(SelectStatementProvider selectStatement);
+    List<LevelPo> selectMany(SelectStatementProvider selectStatement);
 
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("VideoPoResult")
-    Optional<VideoPo> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("LevelPoResult")
+    Optional<LevelPo> selectOne(SelectStatementProvider selectStatement);
 
     default long count(CountDSLCompleter completer) {
-        return MyBatis3Utils.countFrom(this::count, videoPo, completer);
+        return MyBatis3Utils.countFrom(this::count, levelPo, completer);
     }
 
     default int delete(DeleteDSLCompleter completer) {
-        return MyBatis3Utils.deleteFrom(this::delete, videoPo, completer);
+        return MyBatis3Utils.deleteFrom(this::delete, levelPo, completer);
     }
 
     default int deleteByPrimaryKey(Long id_) {
@@ -72,14 +67,9 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    default int insert(VideoPo row) {
-        return MyBatis3Utils.insert(this::insert, row, videoPo, c ->
-            c.map(title).toProperty("title")
-            .map(levelName).toProperty("levelName")
-            .map(address).toProperty("address")
-            .map(status).toProperty("status")
-            .map(actionBy).toProperty("actionBy")
-            .map(levelId).toProperty("levelId")
+    default int insert(LevelPo row) {
+        return MyBatis3Utils.insert(this::insert, row, levelPo, c ->
+            c.map(name).toProperty("name")
             .map(deleted).toProperty("deleted")
             .map(createTime).toProperty("createTime")
             .map(createBy).toProperty("createBy")
@@ -88,14 +78,9 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    default int insertSelective(VideoPo row) {
-        return MyBatis3Utils.insert(this::insert, row, videoPo, c ->
-            c.map(title).toPropertyWhenPresent("title", row::getTitle)
-            .map(levelName).toPropertyWhenPresent("levelName", row::getLevelName)
-            .map(address).toPropertyWhenPresent("address", row::getAddress)
-            .map(status).toPropertyWhenPresent("status", row::getStatus)
-            .map(actionBy).toPropertyWhenPresent("actionBy", row::getActionBy)
-            .map(levelId).toPropertyWhenPresent("levelId", row::getLevelId)
+    default int insertSelective(LevelPo row) {
+        return MyBatis3Utils.insert(this::insert, row, levelPo, c ->
+            c.map(name).toPropertyWhenPresent("name", row::getName)
             .map(deleted).toPropertyWhenPresent("deleted", row::getDeleted)
             .map(createTime).toPropertyWhenPresent("createTime", row::getCreateTime)
             .map(createBy).toPropertyWhenPresent("createBy", row::getCreateBy)
@@ -104,35 +89,30 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    default Optional<VideoPo> selectOne(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectOne(this::selectOne, selectList, videoPo, completer);
+    default Optional<LevelPo> selectOne(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectOne(this::selectOne, selectList, levelPo, completer);
     }
 
-    default List<VideoPo> select(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectList(this::selectMany, selectList, videoPo, completer);
+    default List<LevelPo> select(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectList(this::selectMany, selectList, levelPo, completer);
     }
 
-    default List<VideoPo> selectDistinct(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, videoPo, completer);
+    default List<LevelPo> selectDistinct(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, levelPo, completer);
     }
 
-    default Optional<VideoPo> selectByPrimaryKey(Long id_) {
+    default Optional<LevelPo> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
     }
 
     default int update(UpdateDSLCompleter completer) {
-        return MyBatis3Utils.update(this::update, videoPo, completer);
+        return MyBatis3Utils.update(this::update, levelPo, completer);
     }
 
-    static UpdateDSL<UpdateModel> updateAllColumns(VideoPo row, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(title).equalTo(row::getTitle)
-                .set(levelName).equalTo(row::getLevelName)
-                .set(address).equalTo(row::getAddress)
-                .set(status).equalTo(row::getStatus)
-                .set(actionBy).equalTo(row::getActionBy)
-                .set(levelId).equalTo(row::getLevelId)
+    static UpdateDSL<UpdateModel> updateAllColumns(LevelPo row, UpdateDSL<UpdateModel> dsl) {
+        return dsl.set(name).equalTo(row::getName)
                 .set(deleted).equalTo(row::getDeleted)
                 .set(createTime).equalTo(row::getCreateTime)
                 .set(createBy).equalTo(row::getCreateBy)
@@ -140,13 +120,8 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
                 .set(updateBy).equalTo(row::getUpdateBy);
     }
 
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(VideoPo row, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(title).equalToWhenPresent(row::getTitle)
-                .set(levelName).equalToWhenPresent(row::getLevelName)
-                .set(address).equalToWhenPresent(row::getAddress)
-                .set(status).equalToWhenPresent(row::getStatus)
-                .set(actionBy).equalToWhenPresent(row::getActionBy)
-                .set(levelId).equalToWhenPresent(row::getLevelId)
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(LevelPo row, UpdateDSL<UpdateModel> dsl) {
+        return dsl.set(name).equalToWhenPresent(row::getName)
                 .set(deleted).equalToWhenPresent(row::getDeleted)
                 .set(createTime).equalToWhenPresent(row::getCreateTime)
                 .set(createBy).equalToWhenPresent(row::getCreateBy)
@@ -154,14 +129,9 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
                 .set(updateBy).equalToWhenPresent(row::getUpdateBy);
     }
 
-    default int updateByPrimaryKey(VideoPo row) {
+    default int updateByPrimaryKey(LevelPo row) {
         return update(c ->
-            c.set(title).equalTo(row::getTitle)
-            .set(levelName).equalTo(row::getLevelName)
-            .set(address).equalTo(row::getAddress)
-            .set(status).equalTo(row::getStatus)
-            .set(actionBy).equalTo(row::getActionBy)
-            .set(levelId).equalTo(row::getLevelId)
+            c.set(name).equalTo(row::getName)
             .set(deleted).equalTo(row::getDeleted)
             .set(createTime).equalTo(row::getCreateTime)
             .set(createBy).equalTo(row::getCreateBy)
@@ -171,14 +141,9 @@ public interface VideoPoMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    default int updateByPrimaryKeySelective(VideoPo row) {
+    default int updateByPrimaryKeySelective(LevelPo row) {
         return update(c ->
-            c.set(title).equalToWhenPresent(row::getTitle)
-            .set(levelName).equalToWhenPresent(row::getLevelName)
-            .set(address).equalToWhenPresent(row::getAddress)
-            .set(status).equalToWhenPresent(row::getStatus)
-            .set(actionBy).equalToWhenPresent(row::getActionBy)
-            .set(levelId).equalToWhenPresent(row::getLevelId)
+            c.set(name).equalToWhenPresent(row::getName)
             .set(deleted).equalToWhenPresent(row::getDeleted)
             .set(createTime).equalToWhenPresent(row::getCreateTime)
             .set(createBy).equalToWhenPresent(row::getCreateBy)

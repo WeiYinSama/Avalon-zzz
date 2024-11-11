@@ -30,10 +30,10 @@ spring:
     url: jdbc:mysql://localhost:3306/avalon_zzz?serverTimezone=Asia/Shanghai
     #数据库服务器用户名和密码
     username: root
-    password: 123456
+    password: Hd15364514749+
 #    password: Hd15364514749+
     #数据库连接池
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceWrapper
     druid:
       #初始化时与 Mysql 建立物理连接的个数
       initial-size: 3
@@ -41,20 +41,6 @@ spring:
       min-idle: 3
       #最大连接池数量
       max-active: 100
-      #获取连接时最大等待时间
-      max-wait: 60000
-      #配置监控页面访问登录名及密码
-      stat-view-servlet:
-        login-username: admin
-        login-password: 123456
-        enabled: true
-        url-pattern: /druid/*
-      filter:
-        stat:
-          #是否开启慢sql查询监控
-          log-slow-sql: true
-          #慢SQL执行时间
-          slow-sql-millis: 100
       validation-query: select 1
   data:
     redis:
@@ -65,7 +51,7 @@ spring:
       # Redis服务器连接端口
       port: 6379
       # Redis服务器连接密码
-      #      password: 123456
+      password: 123456
       #连接池最大连接数（使用负值表示没有限制）
       lettuce:
         pool:
@@ -82,6 +68,8 @@ spring:
 logging:
   charset:
     console: utf-8
+  level:
+    root: debug
 
 mail:
   fromMail:
