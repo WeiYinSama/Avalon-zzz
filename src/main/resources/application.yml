@@ -9,20 +9,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  ## QQ
-  mail:
-    host: smtp.qq.com
-    username: 932237234@qq.com
-    password: pmofkamonztubchd
-    port: 587
-
-  #  mail:
-#    host: smtp.gmail.com
-#    username: yingxiaoluluna4@gmail.com
-#    password: caok tswv axid tmvp
-#    properties:
-#      "mail.smtp.auth": true
-#      "mail.smtp.starttls.enable": true
   datasource:
     #JDBC驱动
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -71,9 +57,5 @@ logging:
   level:
     root: debug
 
-mail:
-  fromMail:
-#    addr: yingxiaoluluna4@gmail.com
-    addr: 932237234@qq.com
 file:
   targetDir: C:/zzz-file
